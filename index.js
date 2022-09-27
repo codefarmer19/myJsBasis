@@ -285,3 +285,18 @@ var mes = '';
     }
 
     console.log('===================for循环===========================');
+
+    for(let forIndex = 0; forIndex <nameqqq.length; forIndex++){
+        const name1 = nameqqq[forIndex];
+        console.log(name1);
+    }
+
+    console.log('===================for of===========================');
+
+    for (const name of nameqqq) {
+        console.log(name);
+    }
+    console.log('===================for in===========================');
+    for (var i in nameqqq){
+        console.log(nameqqq[i]);
+    }
