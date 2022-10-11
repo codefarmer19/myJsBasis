@@ -517,3 +517,59 @@ var mes = '';
 
     console.log('===================Promise===========================');
     console.log('工作原理：new一个promise 传入一个回调函数 成功时调用第一个值 失败调用第二个');
+
+    function promiseTimeOut(ms){
+        return new Promise((resolve, reject) => {//他给我们这两个参数 一个是成功一个是失败
+            //resolve(42);//一旦成功就可以直接使用resolve 传入值就直接写在括号里；
+            //因为方法里有resolve, reject可以直接在方法里用timeout
+            setTimeout(resolve,ms);//这么写计时走完了回执行promise定时这里用ms传入毫秒值 如果这里改成reject下面就会走失败
+        })
+    }
+    //调用 并且指定值为2000
+    promiseTimeOut(2000)//2000是2秒
+        .then(() => {
+            console.log("成功");
+        }).catch(() => {//如果失败的话走这一行
+            console.log("失败");
+        })
+        //闭合写法要查看闭合写法注释掉上面的代码
+        promiseTimeOut(2000)//2000是2秒
+        .then(() => {
+            console.log("成功");
+            return promiseTimeOut(1000);
+        }).then(() =>{
+            console.log("也完成了");
+            //可以在这里传值
+            return Promise.resolve(98);  
+        }).then((result) =>{
+            console.log(result);//这里把resolve的值传给了result
+        }).catch(() => {//如果失败的话走这一行
+            console.log("失败");
+        })
+
+        console.log('===================Async/Await===========================');
+        async function async1(){
+            return 666;
+        }
+
+        async function run() {
+            //逻辑
+            console.log("开始");
+            await promiseTimeOut(2000);//等待上面的方法两秒
+            const async2 = await async1(3000);
+            console.log(async2);
+            console.log("停止");
+        }
+        run();
+
+        console.log('===================使用包===========================');
+        console.log('在终端 输入 npm init -y 这个-y是跳过安装提示');
+        console.log('接下来安装 包');
+        console.log('npm install --save-dev prettier');
+        /*
+        然后会看到 package-lock.json 这个文件有这行代码 其中的test可以修改 为了确认使用包 添加了脚本 可以改test名 如format
+        "scripts": {
+            "test": "echo \"Error: no test specified\" && exit 1"
+          },
+        */
+        //这个其实就是配置环境 没必要讲解 实操根据需求用
